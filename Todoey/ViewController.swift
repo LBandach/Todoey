@@ -13,8 +13,14 @@ class ViewController: UITableViewController {
     
     var itemArray = ["asdas","sfsdf","sdfsdf"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let item = defaults.array(forKey: "ToDoListArray") as? [String]{
+            itemArray = item
+        }
         
     }
 
@@ -60,7 +66,7 @@ class ViewController: UITableViewController {
         let action = UIAlertAction(title: "Add item", style: .default) { (action) in
             
             self.itemArray.append(passedItem.text!)
-           print(self.itemArray)
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             self.tableView.reloadData()
         }
         
@@ -69,7 +75,6 @@ class ViewController: UITableViewController {
             alertTextField.placeholder = "create new item"
             passedItem = alertTextField
         }
-        
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
