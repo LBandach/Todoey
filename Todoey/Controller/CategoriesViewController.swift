@@ -12,8 +12,6 @@ import CoreData
 class CategoriesViewController: UITableViewController {
 
     var categoryArray: [Category] = []
-
-    
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -21,7 +19,6 @@ class CategoriesViewController: UITableViewController {
         super.viewDidLoad()
         
         loadCategories()
-        
     }
     
     //MARK: Table View DataSource Methods
@@ -80,7 +77,6 @@ class CategoriesViewController: UITableViewController {
             let newItem = Category(context: self.context)
             newItem.name = passedText.text
             self.categoryArray.append(newItem)
-        
             self.saveCategories()
         }
         
@@ -90,8 +86,7 @@ class CategoriesViewController: UITableViewController {
         }
         
         alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        
+        present(alert, animated: true, completion: nil)
         
     }
     
