@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: SwipeTableViewController {
     
     var toDoItems: Results<Item>?
     var selectedCategory : Category?{
@@ -21,9 +21,7 @@ class ToDoListViewController: UITableViewController {
     let realm = try! Realm()
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
     }
 
     //MARK: TableView Methods
@@ -34,7 +32,7 @@ class ToDoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = toDoItems?[indexPath.row] {
             
@@ -108,15 +106,27 @@ class ToDoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    //MARK: Delete Data From Swipe
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let itemForDelition = toDoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(itemForDelition)
+                }
+            } catch {
+                print("category delition error \(error)")
+            }
+        }
+    }
+    
 }
     //MARK: SearchBar methods
 
 extension ToDoListViewController: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         toDoItems = toDoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
-
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -125,9 +135,6 @@ extension ToDoListViewController: UISearchBarDelegate{
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-            
         }
     }
-    
-    
 }
