@@ -10,6 +10,6 @@ import Foundation
 import RealmSwift
 
 class Category: Object {
-    @objc dynamic var name: String = "a"
+    @objc dynamic var name: String = ""
     let items = List<Item>()
 }

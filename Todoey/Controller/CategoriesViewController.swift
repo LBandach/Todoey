@@ -14,8 +14,6 @@ class CategoriesViewController: UITableViewController {
     let realm = try! Realm()
     var categoryArray: Results<Category>?
     
-    //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +21,6 @@ class CategoriesViewController: UITableViewController {
     }
     
     //MARK: Table View DataSource Methods
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -40,12 +34,12 @@ class CategoriesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as UITableViewCell
-        
-        if categoryArray?.count == 0 {
-            cell.textLabel?.text = "No Categories added yet"
-        } else {
-            cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
-        }
+        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
+//        if categoryArray?.count == 0 {
+//            cell.textLabel?.text = "No Categories added yet"
+//        } else {
+//            cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories added yet"
+//        }
         
         return cell
     }
@@ -71,7 +65,6 @@ class CategoriesViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    
     //MARK: Add New Categories
     
     @IBAction func AddButtonPressed(_ sender: UIBarButtonItem) {
@@ -86,15 +79,12 @@ class CategoriesViewController: UITableViewController {
             newItem.name = passedText.text!
             self.save(category: newItem)
         }
-        
         alert.addTextField { (alertText) in
             alertText.placeholder = "create new category"
             passedText = alertText
         }
-        
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        
     }
     
     //MARK: Table View Delegate Methods
@@ -112,14 +102,7 @@ class CategoriesViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow{
             destinationVC.selectedCategory = categoryArray?[indexPath.row]
         }
-        
     }
-    
-    
-    
-    
-
-    
 }
 
 

@@ -10,7 +10,6 @@ import UIKit
 import RealmSwift
 
 class ToDoListViewController: UITableViewController {
-
     
     var toDoItems: Results<Item>?
     var selectedCategory : Category?{
@@ -28,7 +27,6 @@ class ToDoListViewController: UITableViewController {
     }
 
     //MARK: TableView Methods
-    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDoItems?.count ?? 1
@@ -47,6 +45,7 @@ class ToDoListViewController: UITableViewController {
         } else {
             cell.textLabel?.text = "No items added"
         }
+        
         return cell
     }
     
@@ -97,11 +96,8 @@ class ToDoListViewController: UITableViewController {
             alertTextField.placeholder = "create new item"
             passedItem = alertTextField
         }
-        
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        
-        
     }
     
     //MARK: Model Manipulation Methods
@@ -113,9 +109,7 @@ class ToDoListViewController: UITableViewController {
     }
     
 }
-
     //MARK: SearchBar methods
-
 
 extension ToDoListViewController: UISearchBarDelegate{
     
