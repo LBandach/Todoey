@@ -21,7 +21,7 @@ class ToDoListViewController: SwipeTableViewController {
     let realm = try! Realm()
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
 
     //MARK: TableView Methods
